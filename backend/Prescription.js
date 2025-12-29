@@ -1,13 +1,18 @@
-const mongoose = require("mongoose");
-
-const PrescriptionSchema = new mongoose.Schema({
-  patient: String,
-  medicine: String,
-  dose: String,
-  date: {
-    type: String,
-    default: new Date().toLocaleDateString()
-  }
+fetch("https://digital-prescription-system.onrender.com/create", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    patient: patientName,
+    medicine: medicine,
+    dose: dose
+  })
+})
+.then(res => res.json())
+.then(data => {
+  alert("Prescription saved successfully");
+})
+.catch(err => {
+  alert("Backend error");
 });
-
-module.exports = mongoose.model("Prescription", PrescriptionSchema);

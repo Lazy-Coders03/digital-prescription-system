@@ -1,14 +1,17 @@
 function createPrescription() {
+  console.log("STEP 1: Button clicked");
+
   const patientName = document.getElementById("patient").value;
   const medicine = document.getElementById("medicine").value;
   const dose = document.getElementById("dose").value;
 
-  if (patientName === "" || medicine === "" || dose === "") {
+  if (!patientName || !medicine || !dose) {
     alert("Please fill all fields");
     return;
   }
 
-  // 🔗 Send data to backend
+  console.log("STEP 2: About to send POST request");
+
   fetch("https://digital-prescription-system.onrender.com/create", {
     method: "POST",
     headers: {
@@ -20,29 +23,25 @@ function createPrescription() {
       dose: dose
     })
   })
-  .then(response => response.json())
+  .then(res => {
+    console.log("STEP 3: Response received");
+    return res.json();
+  })
   .then(data => {
+    console.log("STEP 4: Backend data:", data);
+
     alert("Prescription sent to backend");
 
-    // ✅ Generate QR Code
     document.getElementById("qrcode").innerHTML = "";
 
-    const qrData = `
-Patient: ${patientName}
-Medicine: ${medicine}
-Dose: ${dose}
-    `;
-
     new QRCode(document.getElementById("qrcode"), {
-      text: qrData,
+      text: `Patient: ${patientName}\nMedicine: ${medicine}\nDose: ${dose}`,
       width: 150,
       height: 150
     });
-
-    console.log("Backend response:", data);
   })
-  .catch(error => {
-    console.error("Error:", error);
-    alert("Failed to connect to backend");
+  .catch(err => {
+    console.error("STEP 5: Fetch failed", err);
+    alert("Backend connection failed");
   });
 }

@@ -1,7 +1,7 @@
 # Digital Prescription Management System (Frontend)
 
 ## Description
-This is the frontend of a beginner-level Digital Prescription Management System.
+This is the frontend of a  beginner-level Digital Prescription Management System.
 
 ## Features
 - Doctor creates digital prescription

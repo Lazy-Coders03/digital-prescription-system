@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Digital Prescription System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header">
+  Digital Prescription System
+</div>
+
+<div class="container">
+
+  <h2>Doctor Prescription</h2>
+
+  <label>Patient Name</label>
+  <input type="text" id="patient" placeholder="Enter patient name">
+
+  <label>Medicine</label>
+  <select id="medicine">
+    <option>Paracetamol</option>
+    <option>Aspirin</option>
+    <option>Ibuprofen</option>
+  </select>
+
+  <label>Dose</label>
+  <select id="dose">
+    <option>Morning</option>
+    <option>Morning & Night</option>
+    <option>After Meals</option>
+  </select>
+
+  <button onclick="createPrescription()">Create Prescription</button>
+
+  <div id="qrBox">
+    <h3>Prescription QR Code</h3>
+    <div id="qrcode"></div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+<script src="prescription.js"></script>
+
+</body>
+</html>

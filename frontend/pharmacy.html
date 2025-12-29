@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharmacy Verification</title>
+</head>
+<body>
+
+<h2>Scan Prescription QR</h2>
+<div id="reader" style="width:300px;"></div>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+  new Html5Qrcode("reader").start(
+    { facingMode: "environment" },
+    { fps: 10, qrbox: 250 },
+    function (result) {
+      alert("Prescription Verified\n\n" + result);
+    }
+  );
+</script>
+
+</body>
+</html>

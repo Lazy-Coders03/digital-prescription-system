@@ -1,37 +1,46 @@
 function createPrescription() {
+  const patientName = document.getElementById("patient").value;
+  const medicine = document.getElementById("medicine").value;
+  const dose = document.getElementById("dose").value;
 
-  var patientName = document.getElementById("patient").value;
-  var medicine = document.getElementById("medicine").value;
-  var dose = document.getElementById("dose").value;
-
-  if (patientName === "") {
-    alert("Please enter patient name");
+  if (!patientName || !medicine || !dose) {
+    alert("Please fill all fields");
     return;
   }
 
-  var prescription = {
+  const prescription = {
     patient: patientName,
     medicine: medicine,
     dose: dose
   };
 
-  // Save prescription for patient page
-  localStorage.setItem("prescription", JSON.stringify(prescription));
+  // 🔗 SEND TO BACKEND
+  fetch("https://digital-prescription-system.onrender.com/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(prescription)
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Backend response:", data);
 
-  // Clear old QR
-  document.getElementById("qrcode").innerHTML = "";
+      // Save for patient page
+      localStorage.setItem("prescription", JSON.stringify(prescription));
 
-  // Generate QR code
-  new QRCode(document.getElementById("qrcode"), {
-    text: JSON.stringify(prescription),
-    width: 150,
-    height: 150
-  });
+      // Generate QR
+      document.getElementById("qrcode").innerHTML = "";
+      new QRCode(document.getElementById("qrcode"), {
+        text: JSON.stringify(prescription),
+        width: 150,
+        height: 150
+      });
 
-  alert(
-    "Prescription Created\n\n" +
-    "Patient: " + patientName + "\n" +
-    "Medicine: " + medicine + "\n" +
-    "Dose: " + dose
-  );
+      alert("Prescription sent to backend successfully ✅");
+    })
+    .catch(err => {
+      console.error("Backend error:", err);
+      alert("Backend connection failed ❌");
+    });
 }

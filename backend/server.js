@@ -1,32 +1,26 @@
 const express = require("express");
 const cors = require("cors");
 
-require("./db");
-const Prescription = require("./Prescription");
-
 const app = express();
 
+// middleware
 app.use(cors());
 app.use(express.json());
 
-// Test route
-app.get("/", function (req, res) {
+// health check route (VERY IMPORTANT for Render)
+app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
-// Create prescription API
-app.post("/create", function (req, res) {
-  const prescription = new Prescription({
-    patient: req.body.patient,
-    medicine: req.body.medicine,
-    dose: req.body.dose
-  });
-
-  prescription.save(function () {
-    res.send("Prescription saved successfully");
-  });
+// test API route
+app.post("/create", (req, res) => {
+  console.log("Received data:", req.body);
+  res.json({ success: true, message: "Prescription received" });
 });
 
-app.listen(5000, function () {
-  console.log("Server running on http://localhost:5000");
+// 🔥 IMPORTANT: use process.env.PORT
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

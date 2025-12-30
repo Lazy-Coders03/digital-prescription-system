@@ -37,9 +37,12 @@ Shows:
 - HTML
 - CSS
 - JavaScript
-
+- nodejs
+- mongodb
+- github
+- render
 ## How It Works (Flow)
-1.Do6.ctor creates a prescription
+1.Doctor creates a prescription
 2.Data is saved in MongoDB
 3.QR code is generated
 4.Patient shows QR to pharmacy

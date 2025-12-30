@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1:27017/prescriptions", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Connected");
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    process.exit(1);
+  }
+};
 
-module.exports = mongoose;
+module.exports = connectDB;
+

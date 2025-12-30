@@ -6,32 +6,19 @@
 </head>
 <body>
 
-<div class="header">
-  Patient Portal
-</div>
+<div class="header">Patient Prescription Portal</div>
 
 <div class="container">
+  <h2>View Your Prescriptions</h2>
 
-  <h2>Your Prescription</h2>
-  <div id="output"></div>
+  <label>Patient Name</label>
+  <input type="text" id="patientName" placeholder="Enter your name">
 
+  <button onclick="loadPrescriptions()">View Prescriptions</button>
+
+  <div id="prescriptionList"></div>
 </div>
 
-<script>
-  var data = localStorage.getItem("prescription");
-
-  if (data) {
-    var prescription = JSON.parse(data);
-
-    document.getElementById("output").innerHTML =
-      "<p><b>Patient Name:</b> " + prescription.patient + "</p>" +
-      "<p><b>Medicine:</b> " + prescription.medicine + "</p>" +
-      "<p><b>Dose:</b> " + prescription.dose + "</p>";
-  } else {
-    document.getElementById("output").innerHTML =
-      "<p>No prescription found.</p>";
-  }
-</script>
-
+<script src="patient.js"></script>
 </body>
 </html>

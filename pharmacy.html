@@ -8,17 +8,17 @@
 <h2>Scan Prescription QR</h2>
 
 <div id="reader" style="width:300px;"></div>
-
 <div id="result" style="margin-top:20px;font-size:18px;"></div>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
 <script>
+  // ✅ THIS IS WHERE YOU PASTE THE FUNCTION
   function onScanSuccess(decodedText) {
     console.log("QR Data:", decodedText);
 
-    // STEP 1: Extract patient name
-    const match = decodedText.match(/Patient:\s*(.+)/);
+    // extract patient name (fixed regex)
+    const match = decodedText.match(/Patient:\s*([^\n]+)/);
 
     if (!match) {
       document.getElementById("result").innerHTML =
@@ -27,9 +27,8 @@
     }
 
     const patientName = match[1].trim();
-    console.log("Patient:", patientName);
 
-    // STEP 2: Call backend
+    // call backend to verify
     fetch(
       `https://digital-prescription-system.onrender.com/patient/${patientName}`
     )
@@ -55,6 +54,7 @@
       });
   }
 
+  // ✅ START QR SCANNER USING THE FUNCTION ABOVE
   new Html5Qrcode("reader").start(
     { facingMode: "environment" },
     { fps: 10, qrbox: 250 },
